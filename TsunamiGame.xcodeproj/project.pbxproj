@@ -16,6 +16,7 @@
 		091913AC1E334ACC005EA095 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 091913AA1E334ACC005EA095 /* Main.storyboard */; };
 		091913AE1E334ACC005EA095 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 091913AD1E334ACC005EA095 /* Assets.xcassets */; };
 		091913B11E334ACC005EA095 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 091913AF1E334ACC005EA095 /* LaunchScreen.storyboard */; };
+		091913BA1E33664D005EA095 /* Background.m in Sources */ = {isa = PBXBuildFile; fileRef = 091913B91E33664D005EA095 /* Background.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,8 @@
 		091913AD1E334ACC005EA095 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		091913B01E334ACC005EA095 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		091913B21E334ACC005EA095 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		091913B81E33664D005EA095 /* Background.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Background.h; sourceTree = "<group>"; };
+		091913B91E33664D005EA095 /* Background.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Background.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +74,8 @@
 				091913A51E334ACC005EA095 /* GameScene.m */,
 				091913A71E334ACC005EA095 /* GameViewController.h */,
 				091913A81E334ACC005EA095 /* GameViewController.m */,
+				091913B81E33664D005EA095 /* Background.h */,
+				091913B91E33664D005EA095 /* Background.m */,
 				091913AA1E334ACC005EA095 /* Main.storyboard */,
 				091913AD1E334ACC005EA095 /* Assets.xcassets */,
 				091913AF1E334ACC005EA095 /* LaunchScreen.storyboard */,
@@ -167,6 +172,7 @@
 				091913A91E334ACC005EA095 /* GameViewController.m in Sources */,
 				0919139F1E334ACC005EA095 /* AppDelegate.m in Sources */,
 				091913A61E334ACC005EA095 /* GameScene.m in Sources */,
+				091913BA1E33664D005EA095 /* Background.m in Sources */,
 				0919139C1E334ACC005EA095 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

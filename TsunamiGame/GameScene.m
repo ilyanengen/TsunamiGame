@@ -35,6 +35,9 @@
     
     //add wave
     [self addWave];
+    
+    //add background
+    [self addBackground];
 }
 
 
@@ -47,10 +50,11 @@
 
     CGSize playerSize = CGSizeMake(screenCell.width, screenCell.width * 2);
     SKSpriteNode *player = [SKSpriteNode spriteNodeWithColor:[SKColor redColor] size:playerSize];
+    
     player.anchorPoint = CGPointMake(0.5, 0.5);
     player.zPosition = 10;
-    
     player.position = CGPointMake(screenWidth/2, screenHeight/2 - screenCell.height);
+    
     _player = player;
     [self addChild:_player];
 }
@@ -59,12 +63,25 @@
 
     CGSize waveSize = CGSizeMake(screenWidth, screenCell.width);
     SKSpriteNode *wave = [SKSpriteNode spriteNodeWithColor:[SKColor blueColor] size:waveSize];
+    
     wave.anchorPoint = CGPointMake(0,0);
     wave.zPosition = 11;
-    
     wave.position = CGPointZero;
+    
     _wave = wave;
     [self addChild:_wave];
+}
+
+- (void)addBackground {
+
+    Background *background = [[Background alloc]initWithColor:[SKColor lightGrayColor] size:CGSizeMake(screenWidth, screenHeight)];
+    
+    background.anchorPoint = CGPointZero;
+    background.zPosition = 1;
+    background.position = CGPointZero;
+    
+    _background = background;
+    [self addChild:_background];
 }
 
 #pragma mark - TOUCHES

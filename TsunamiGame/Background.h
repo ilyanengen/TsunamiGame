@@ -1,5 +1,5 @@
 //
-//  GameScene.h
+//  Background.h
 //  TsunamiGame
 //
 //  Created by Илья on 21.01.17.
@@ -7,8 +7,7 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-#import "Background.h"
 
-@interface GameScene : SKScene
+@interface Background : SKSpriteNode
 
 @end
