@@ -85,14 +85,29 @@
 }
 
 #pragma mark - TOUCHES
-/*
+
  - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
- // Run 'Pulse' action from 'Actions.sks'
- [_label runAction:[SKAction actionNamed:@"Pulse"] withKey:@"fadeInOut"];
  
- for (UITouch *t in touches) {[self touchDownAtPoint:[t locationInNode:self]];}
+ for (UITouch *t in touches) {
+     
+     CGPoint touchPosition = [t locationInNode:self];
+     NSLog(@"\n\ntouch position X: %f Y: %f\n\n", touchPosition.x, touchPosition.y);
+     CGFloat centerX = screenWidth/2;
+     
+     if (touchPosition.x > centerX) {
+         
+         [self playerMoveRight];
+     
+     } else {
+         
+         [self playerMoveLeft];
+     }
  }
- - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
+ }
+
+
+/*
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
  for (UITouch *t in touches) {[self touchMovedToPoint:[t locationInNode:self]];}
  }
  - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -101,7 +116,23 @@
  - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
  for (UITouch *t in touches) {[self touchUpAtPoint:[t locationInNode:self]];}
  }
- 
  */
+
+#pragma mark - Actions
+-(void)playerMoveRight {
+
+    NSTimeInterval moveRightDuration = 0.3;
+    CGVector moveRightVector = CGVectorMake(screenCell.width, 0);
+    SKAction *moveRightAction = [SKAction moveBy:moveRightVector duration:moveRightDuration];
+    [_player runAction:moveRightAction];
+}
+-(void)playerMoveLeft {
+    
+    NSTimeInterval moveLeftDuration = 0.3;
+    CGVector moveLeftVector = CGVectorMake(-screenCell.width, 0);
+    SKAction *moveLeftAction = [SKAction moveBy:moveLeftVector duration:moveLeftDuration];
+    [_player runAction:moveLeftAction];
+
+}
 
 @end
