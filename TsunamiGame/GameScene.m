@@ -105,6 +105,8 @@ static NSInteger backgroundMoveSpeed = 150;
             node.position = topPosition;
             NSLog(@"\n\n THIRD NODE WAS PUT ON THE TOP!\n\n");
         }}];
+    
+    //NSLog(@"player's position = (%f, %f)", _player.position.x, _player.position.y);
 }
 
 #pragma mark - Add main nodes
@@ -210,18 +212,18 @@ static NSInteger backgroundMoveSpeed = 150;
 
 #pragma mark - Actions
 -(void)playerMoveRight {
-
-    NSTimeInterval moveRightDuration = 0.3;
-    CGVector moveRightVector = CGVectorMake(screenCell.width, 0);
-    SKAction *moveRightAction = [SKAction moveBy:moveRightVector duration:moveRightDuration];
-    [_player runAction:moveRightAction];
+        
+        NSTimeInterval moveRightDuration = 0.3;
+        CGVector moveRightVector = CGVectorMake(screenCell.width, 0);
+        SKAction *moveRightAction = [SKAction moveBy:moveRightVector duration:moveRightDuration];
+        [_player runAction:moveRightAction];
 }
 -(void)playerMoveLeft {
-    
-    NSTimeInterval moveLeftDuration = 0.3;
-    CGVector moveLeftVector = CGVectorMake(-screenCell.width, 0);
-    SKAction *moveLeftAction = [SKAction moveBy:moveLeftVector duration:moveLeftDuration];
-    [_player runAction:moveLeftAction];
+        
+        NSTimeInterval moveLeftDuration = 0.3;
+        CGVector moveLeftVector = CGVectorMake(-screenCell.width, 0);
+        SKAction *moveLeftAction = [SKAction moveBy:moveLeftVector duration:moveLeftDuration];
+        [_player runAction:moveLeftAction];
 }
 
 @end
