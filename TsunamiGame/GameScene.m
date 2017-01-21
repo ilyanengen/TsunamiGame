@@ -21,10 +21,10 @@ static NSInteger backgroundMoveSpeed = 150;
     //Main nodes
     SKSpriteNode *_player;
     SKSpriteNode *_wave;
-    SKSpriteNode *_background;
+    Background *_firstBackground;
     
     //background
-    SKSpriteNode *_currentBackground;
+    Background *_currentBackground;
     
     NSTimeInterval _lastUpdateTimeInterval;
     NSTimeInterval _timeSinceLast;
@@ -65,20 +65,19 @@ static NSInteger backgroundMoveSpeed = 150;
         _lastUpdateTimeInterval = currentTime;
     }
     
-    //calculation of background move speed
-    [self enumerateChildNodesWithName:_currentBackground.name usingBlock:^(SKNode *node, BOOL *stop) {
+    //BACKGROUND MOVEMENT, calculation of background move speed
+    //FIRST BACKGROUND
+
+    [self enumerateChildNodesWithName:_firstBackground.name usingBlock:^(SKNode *node, BOOL *stop) {
         node.position = CGPointMake(node.position.x, node.position.y - backgroundMoveSpeed * _timeSinceLast);
         
         //if background moves completely off the screen + extra 100 pixels -> remove that background from the parent node
-        if (node.position.x < -(node.frame.size.width+100)) {
+        if (node.position.y < -(node.frame.size.width * 2)) {
             [node removeFromParent];
+            NSLog(@"\n\n NODE WAS REMOVED FROM PARENT!\n\n");
         }}];
     
-    //we create new background node and set it as background
-    
-    //Может создавать новый background когда старый фон ушел вниз на -1 по y ???
-    
-    if (_currentBackground.position.y < -500) {
+    if (_firstBackground.position.y < 0) {
         
         Background *newBackground = [Background generateNewBackground];
         newBackground.size = CGSizeMake(screenWidth, screenHeight);
@@ -86,6 +85,23 @@ static NSInteger backgroundMoveSpeed = 150;
         [self addChild:newBackground];
         _currentBackground = newBackground;
     }
+    
+    //Second Background = CURRENT BACKGROUND
+    [self enumerateChildNodesWithName:_currentBackground.name usingBlock:^(SKNode *node, BOOL *stop) {
+        node.position = CGPointMake(node.position.x, node.position.y - backgroundMoveSpeed * _timeSinceLast);
+        
+        //if background moves completely off the screen + extra 100 pixels -> remove that background from the parent node
+        if (node.position.y < -(node.frame.size.width * 2)) {
+            [node removeFromParent];
+            NSLog(@"\n\n NODE WAS REMOVED FROM PARENT!\n\n");
+        }}];
+    
+    
+    //we create new background node and set it as background
+    
+    //Может создавать новый background когда старый фон ушел вниз на -1 по y ???
+    
+   
 }
 
 #pragma mark - Add main nodes
@@ -100,6 +116,7 @@ static NSInteger backgroundMoveSpeed = 150;
     
     _player = player;
     [self addChild:_player];
+    NSLog(@"player node created");
 }
 
 - (void)addWave {
@@ -113,12 +130,11 @@ static NSInteger backgroundMoveSpeed = 150;
     
     _wave = wave;
     [self addChild:_wave];
+    NSLog(@"wave node created");
 }
 
 - (void)addBackground {
 
-    //Background *background = [[Background alloc]initWithColor:[SKColor lightGrayColor] size:CGSizeMake(screenWidth, screenHeight)];
-    
     Background *background = [Background generateNewBackground];
     background.size = CGSizeMake(screenWidth, screenHeight);
     
@@ -126,8 +142,9 @@ static NSInteger backgroundMoveSpeed = 150;
     
     background.name = @"first background";
     
-    _currentBackground = background;
-    [self addChild:_currentBackground];
+    _firstBackground = background;
+    [self addChild:_firstBackground];
+    NSLog(@"first background node created");
 }
 
 #pragma mark - TOUCHES
