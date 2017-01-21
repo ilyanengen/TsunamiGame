@@ -246,8 +246,8 @@ static NSInteger backgroundMoveSpeed = 150;
 
     //создаем ноды объектов - препятствий
     
-    //Объект1
-    CGSize object1Size = CGSizeMake(screenCell.width, screenCell.height);
+    //Объект1 - горизонтальная тачка
+    CGSize object1Size = CGSizeMake(screenCell.width * 2, screenCell.height);
     SKSpriteNode *object1 = [SKSpriteNode spriteNodeWithColor:[SKColor brownColor] size:object1Size];
     
     object1.anchorPoint = CGPointMake(0.5, 0.5);
@@ -255,7 +255,7 @@ static NSInteger backgroundMoveSpeed = 150;
     object1.position = CGPointMake(screenWidth/2, screenHeight/2);
     object1.name = @"object1";
     
-    object1.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:object1.size];
+    object1.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:object1Size];
     object1.physicsBody.affectedByGravity = NO;
     object1.physicsBody.allowsRotation = NO;
     object1.physicsBody.restitution = 0.0;
@@ -267,14 +267,31 @@ static NSInteger backgroundMoveSpeed = 150;
     object1.physicsBody.collisionBitMask = playerCategory | objectCategory | bordersCategory;
     
     _object1 = object1;
-    [_thirdBackground addChild:_object1];
-    NSLog(@"object1 node added to third background");
     
-    //Объект2
-
+    //[_thirdBackground addChild:_object1];
+    //NSLog(@"object1 node added to third background");
     
-
-
+    //Объект2 - вертикальная тачка
+    CGSize object2Size = CGSizeMake(screenCell.width, screenCell.height * 2);
+    SKSpriteNode *object2 = [SKSpriteNode spriteNodeWithColor:[SKColor greenColor] size:object2Size];
+    
+    object2.anchorPoint = CGPointMake(0.5, 0.5);
+    object2.zPosition = 2;//было 10
+    object2.position = CGPointMake(screenWidth/2, screenHeight/2);
+    object2.name = @"object2";
+    
+    object2.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:object2Size];
+    object2.physicsBody.affectedByGravity = NO;
+    object2.physicsBody.allowsRotation = NO;
+    object2.physicsBody.restitution = 0.0;
+    object2.physicsBody.friction = 0.0;
+    object2.physicsBody.dynamic = YES;
+    
+    object2.physicsBody.categoryBitMask = objectCategory;
+    object2.physicsBody.contactTestBitMask = waveCategory;
+    object2.physicsBody.collisionBitMask = playerCategory | objectCategory | bordersCategory;
+    
+    _object2 = object2;
 }
 
 - (void)addObjectsOnBackgroundNode: (SKSpriteNode *)spriteNode {
