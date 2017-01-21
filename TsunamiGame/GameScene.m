@@ -19,6 +19,10 @@ static NSInteger backgroundMoveSpeed = 150;
 
 @implementation GameScene {
     
+    //for update method
+    NSTimeInterval _lastUpdateTimeInterval;
+    NSTimeInterval _timeSinceLast;
+    
     //screen size
     CGFloat screenHeight;
     CGFloat screenWidth;
@@ -27,12 +31,15 @@ static NSInteger backgroundMoveSpeed = 150;
     //Main nodes
     SKSpriteNode *_player;
     SKSpriteNode *_wave;
+    
+    //background
     Background *_firstBackground;
     Background *_secondBackground;
     Background *_thirdBackground;
     
-    NSTimeInterval _lastUpdateTimeInterval;
-    NSTimeInterval _timeSinceLast;
+    //objects
+    SKSpriteNode *_object1;
+    SKSpriteNode *_object2;
 }
 
 - (void)didMoveToView:(SKView *)view {
@@ -59,6 +66,9 @@ static NSInteger backgroundMoveSpeed = 150;
     
     //add borders
     [self addBorders];
+    
+    //add objects
+    [self addObjects];
 }
 
 #pragma mark - UPDATE METHOD
@@ -116,6 +126,10 @@ static NSInteger backgroundMoveSpeed = 150;
 
             node.position = topPosition;
             NSLog(@"\n\n THIRD NODE WAS PUT ON THE TOP!\n\n");
+            
+            //добавляем объекты на этот нод пока он не виден
+            //[self addObjectsOnBackgroundNode:_thirdBackground];
+        
         }}];
     
     //NSLog(@"player's position = (%f, %f)", _player.position.x, _player.position.y);
@@ -133,7 +147,7 @@ static NSInteger backgroundMoveSpeed = 150;
     
     player.name = @"player";
     
-    player.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:player.size];
+    player.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:playerSize];
     player.physicsBody.affectedByGravity = NO;
     player.physicsBody.allowsRotation = NO;
     player.physicsBody.restitution = 0.0;
@@ -157,6 +171,8 @@ static NSInteger backgroundMoveSpeed = 150;
     wave.anchorPoint = CGPointMake(0,0);
     wave.zPosition = 11;
     wave.position = CGPointZero;
+    
+    wave.name = @"wave";
     
     wave.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:wave.size];
     wave.physicsBody.affectedByGravity = NO;
@@ -224,6 +240,46 @@ static NSInteger backgroundMoveSpeed = 150;
     borders.contactTestBitMask = 0;
 
     self.physicsBody = borders;
+}
+
+- (void)addObjects {
+
+    //создаем ноды объектов - препятствий
+    
+    //Объект1
+    CGSize object1Size = CGSizeMake(screenCell.width, screenCell.height);
+    SKSpriteNode *object1 = [SKSpriteNode spriteNodeWithColor:[SKColor brownColor] size:object1Size];
+    
+    object1.anchorPoint = CGPointMake(0.5, 0.5);
+    object1.zPosition = 2;//было 10
+    object1.position = CGPointMake(screenWidth/2, screenHeight/2);
+    object1.name = @"object1";
+    
+    object1.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:object1.size];
+    object1.physicsBody.affectedByGravity = NO;
+    object1.physicsBody.allowsRotation = NO;
+    object1.physicsBody.restitution = 0.0;
+    object1.physicsBody.friction = 0.0;
+    object1.physicsBody.dynamic = YES;
+    
+    object1.physicsBody.categoryBitMask = objectCategory;
+    object1.physicsBody.contactTestBitMask = waveCategory;
+    object1.physicsBody.collisionBitMask = playerCategory | objectCategory | bordersCategory;
+    
+    _object1 = object1;
+    [_thirdBackground addChild:_object1];
+    NSLog(@"object1 node added to third background");
+    
+    //Объект2
+
+    
+
+
+}
+
+- (void)addObjectsOnBackgroundNode: (SKSpriteNode *)spriteNode {
+
+    NSLog (@"в этом методе будет перемещения объекта 1 и объекта 2 между нодами фонов");
 }
 
 #pragma mark - TOUCHES

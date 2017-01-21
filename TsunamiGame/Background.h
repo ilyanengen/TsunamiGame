@@ -10,6 +10,9 @@
 
 @interface Background : SKSpriteNode
 
+@property (strong, nonatomic) Background* previousBackgroundNode;
+@property (strong, nonatomic) Background* nextBackgroundNode;
+
 +(Background *)generateNewBackground;
 
 @end
