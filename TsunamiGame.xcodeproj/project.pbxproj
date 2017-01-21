@@ -18,6 +18,7 @@
 		091913B11E334ACC005EA095 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 091913AF1E334ACC005EA095 /* LaunchScreen.storyboard */; };
 		091913BA1E33664D005EA095 /* Background.m in Sources */ = {isa = PBXBuildFile; fileRef = 091913B91E33664D005EA095 /* Background.m */; };
 		091913BD1E3374F8005EA095 /* road.png in Resources */ = {isa = PBXBuildFile; fileRef = 091913BC1E3374F8005EA095 /* road.png */; };
+		091913BF1E33CB61005EA095 /* pickup.png in Resources */ = {isa = PBXBuildFile; fileRef = 091913BE1E33CB61005EA095 /* pickup.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		091913B81E33664D005EA095 /* Background.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Background.h; sourceTree = "<group>"; };
 		091913B91E33664D005EA095 /* Background.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Background.m; sourceTree = "<group>"; };
 		091913BC1E3374F8005EA095 /* road.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = road.png; sourceTree = "<group>"; };
+		091913BE1E33CB61005EA095 /* pickup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pickup.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 		091913BB1E3374BE005EA095 /* Art */ = {
 			isa = PBXGroup;
 			children = (
+				091913BE1E33CB61005EA095 /* pickup.png */,
 				091913BC1E3374F8005EA095 /* road.png */,
 			);
 			name = Art;
@@ -170,6 +173,7 @@
 				091913AE1E334ACC005EA095 /* Assets.xcassets in Resources */,
 				091913B11E334ACC005EA095 /* LaunchScreen.storyboard in Resources */,
 				091913A31E334ACC005EA095 /* Actions.sks in Resources */,
+				091913BF1E33CB61005EA095 /* pickup.png in Resources */,
 				091913BD1E3374F8005EA095 /* road.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

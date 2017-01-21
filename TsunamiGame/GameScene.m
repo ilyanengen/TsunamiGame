@@ -15,7 +15,7 @@ static const uint32_t waveCategory =  0x1 << 2;
 static const uint32_t bordersCategory =  0x1 << 3;
 
 //define the background move speed in pixels per frame.
-static NSInteger backgroundMoveSpeed = 150;
+static NSInteger backgroundMoveSpeed = 250; //было 150
 
 @implementation GameScene {
     
@@ -40,6 +40,8 @@ static NSInteger backgroundMoveSpeed = 150;
     //objects
     SKSpriteNode *_object1;
     SKSpriteNode *_object2;
+    SKSpriteNode *_object3;
+    SKSpriteNode *_object4;
 }
 
 - (void)didMoveToView:(SKView *)view {
@@ -112,6 +114,9 @@ static NSInteger backgroundMoveSpeed = 150;
 
             node.position = topPosition;
             NSLog(@"\n\n SECOND NODE WAS PUT ON THE TOP!\n\n");
+            
+ //!!!           //добавляем объекты на этот нод пока он не виден
+            [self addObjectsOnBackgroundNode:_secondBackground];
         }}];
 
     //3rd background movement
@@ -127,8 +132,8 @@ static NSInteger backgroundMoveSpeed = 150;
             node.position = topPosition;
             NSLog(@"\n\n THIRD NODE WAS PUT ON THE TOP!\n\n");
             
-            //добавляем объекты на этот нод пока он не виден
-            //[self addObjectsOnBackgroundNode:_thirdBackground];
+ //!!!           //добавляем объекты на этот нод пока он не виден
+            [self addObjectsOnBackgroundNode:_thirdBackground];
         
         }}];
     
@@ -140,6 +145,7 @@ static NSInteger backgroundMoveSpeed = 150;
 
     CGSize playerSize = CGSizeMake(screenCell.width, screenCell.width * 2);
     SKSpriteNode *player = [SKSpriteNode spriteNodeWithColor:[SKColor redColor] size:playerSize];
+    //SKSpriteNode *player = [SKSpriteNode spriteNodeWithImageNamed:@"pickup.png"];
     
     player.anchorPoint = CGPointMake(0.5, 0.5);
     player.zPosition = 10;
@@ -157,6 +163,9 @@ static NSInteger backgroundMoveSpeed = 150;
     player.physicsBody.categoryBitMask = playerCategory;
     player.physicsBody.contactTestBitMask = waveCategory;
     player.physicsBody.collisionBitMask = objectCategory | bordersCategory;
+    
+    //SKTexture *playerTexture = [SKTexture textureWithImageNamed:@"pickup.png"];
+    //player.texture = playerTexture;
     
     _player = player;
     [self addChild:_player];
@@ -244,14 +253,14 @@ static NSInteger backgroundMoveSpeed = 150;
 
 - (void)addObjects {
 
-    //создаем ноды объектов - препятствий
+    //создаем ноды объектов - препятствий и сохраняем в проперти
     
     //Объект1 - горизонтальная тачка
     CGSize object1Size = CGSizeMake(screenCell.width * 2, screenCell.height);
     SKSpriteNode *object1 = [SKSpriteNode spriteNodeWithColor:[SKColor brownColor] size:object1Size];
     
     object1.anchorPoint = CGPointMake(0.5, 0.5);
-    object1.zPosition = 2;//было 10
+    object1.zPosition = 2;
     object1.position = CGPointMake(screenWidth/2, screenHeight/2);
     object1.name = @"object1";
     
@@ -268,15 +277,12 @@ static NSInteger backgroundMoveSpeed = 150;
     
     _object1 = object1;
     
-    //[_thirdBackground addChild:_object1];
-    //NSLog(@"object1 node added to third background");
-    
     //Объект2 - вертикальная тачка
     CGSize object2Size = CGSizeMake(screenCell.width, screenCell.height * 2);
     SKSpriteNode *object2 = [SKSpriteNode spriteNodeWithColor:[SKColor greenColor] size:object2Size];
     
     object2.anchorPoint = CGPointMake(0.5, 0.5);
-    object2.zPosition = 2;//было 10
+    object2.zPosition = 2;
     object2.position = CGPointMake(screenWidth/2, screenHeight/2);
     object2.name = @"object2";
     
@@ -292,11 +298,133 @@ static NSInteger backgroundMoveSpeed = 150;
     object2.physicsBody.collisionBitMask = playerCategory | objectCategory | bordersCategory;
     
     _object2 = object2;
+    
+    //Объект3 - горизонтальная тачка
+    CGSize object3Size = CGSizeMake(screenCell.width * 2, screenCell.height);
+    SKSpriteNode *object3 = [SKSpriteNode spriteNodeWithColor:[SKColor blackColor] size:object3Size];
+    
+    object3.anchorPoint = CGPointMake(0.5, 0.5);
+    object3.zPosition = 2;
+    object3.position = CGPointMake(screenWidth/2, screenHeight/2);
+    object3.name = @"object3";
+    
+    object3.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:object3Size];
+    object3.physicsBody.affectedByGravity = NO;
+    object3.physicsBody.allowsRotation = NO;
+    object3.physicsBody.restitution = 0.0;
+    object3.physicsBody.friction = 0.0;
+    object3.physicsBody.dynamic = YES;
+    
+    object3.physicsBody.categoryBitMask = objectCategory;
+    object3.physicsBody.contactTestBitMask = waveCategory;
+    object3.physicsBody.collisionBitMask = playerCategory | objectCategory | bordersCategory;
+    
+    _object3 = object3;
+    
+    //Объект4 - вертикальная тачка
+    CGSize object4Size = CGSizeMake(screenCell.width, screenCell.height * 2);
+    SKSpriteNode *object4 = [SKSpriteNode spriteNodeWithColor:[SKColor greenColor] size:object4Size];
+    
+    object4.anchorPoint = CGPointMake(0.5, 0.5);
+    object4.zPosition = 2;
+    object4.position = CGPointMake(screenWidth/2, screenHeight/2);
+    object4.name = @"object4";
+    
+    object4.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:object4Size];
+    object4.physicsBody.affectedByGravity = NO;
+    object4.physicsBody.allowsRotation = NO;
+    object4.physicsBody.restitution = 0.0;
+    object4.physicsBody.friction = 0.0;
+    object4.physicsBody.dynamic = YES;
+    
+    object4.physicsBody.categoryBitMask = objectCategory;
+    object4.physicsBody.contactTestBitMask = waveCategory;
+    object4.physicsBody.collisionBitMask = playerCategory | objectCategory | bordersCategory;
+    
+    _object4 = object4;
+
 }
 
 - (void)addObjectsOnBackgroundNode: (SKSpriteNode *)spriteNode {
 
-    NSLog (@"в этом методе будет перемещения объекта 1 и объекта 2 между нодами фонов");
+    //if there any child nodes on background node - remove all children from parent
+    NSLog(@"Child nodes on 3rd background node: %lu",  (unsigned long)[spriteNode.children count]);
+    if ([spriteNode.children count] > 0) {
+        
+        for (SKSpriteNode* node in spriteNode.children) {
+            [node removeFromParent];
+        }
+        NSLog(@"Child nodes on 3rd background node: %lu",  (unsigned long)[spriteNode.children count]);
+    }
+    
+    //Let's add new objects
+    int randomNumber = arc4random_uniform(5);//будет рандомное значение 0, 1, 2, 3, 4
+    NSLog(@"random number = %d", randomNumber);
+    
+    //For Second background
+    if ([spriteNode.name isEqualToString:@"second background"]) {
+        
+        switch (randomNumber) {
+            case 0:
+                NSLog(@"case 0 - horizontal in center");
+                _object1.position = CGPointMake(screenWidth/2, screenHeight/2);
+                [spriteNode addChild:_object1];
+                break;
+                
+            case 1:
+                NSLog(@"case 1 - vertical in center");
+                _object2.position = CGPointMake(screenWidth/2, screenHeight/2);
+                [spriteNode addChild:_object2];
+                break;
+                
+            case 2:
+                NSLog(@"case 2 - вертикальная слева сверху, горизонтальная справа внизу");
+                _object1.position = CGPointMake(screenCell.width / 2, screenHeight - screenCell.height * 3);
+                [spriteNode addChild:_object1];
+                
+                _object2.position = CGPointMake(screenCell.width * 4, screenCell.height * 2.5);
+                [spriteNode addChild:_object2];
+                break;
+                
+            case 3:
+                NSLog(@"case 3");
+                break;
+                
+            case 4:
+                NSLog(@"case 4");
+                break;
+        }
+        
+        //For third background
+    } else if ([spriteNode.name isEqualToString:@"third background"]) {
+        
+        switch (randomNumber) {
+            case 0:
+                NSLog(@"case 0 - horizontal in center");
+                _object3.position = CGPointMake(screenWidth/2, screenHeight/2);
+                [spriteNode addChild:_object3];
+                break;
+                
+            case 1:
+                NSLog(@"case 1 - vertical in center");
+                _object4.position = CGPointMake(screenWidth/2, screenHeight/2);
+                [spriteNode addChild:_object4];
+                break;
+                
+            case 2:
+                NSLog(@"case 2");
+                break;
+                
+            case 3:
+                NSLog(@"case 3");
+                break;
+                
+            case 4:
+                NSLog(@"case 4");
+                break;
+        }
+    } else {NSLog(@"!!! ERROR !!! Метод addObjectsOnBackgroundNode был вызван из странного места или в имени backgroundNode'a ошибка");}
+    
 }
 
 #pragma mark - TOUCHES
@@ -368,6 +496,5 @@ static NSInteger backgroundMoveSpeed = 150;
      */
     
     }
-
 
 @end
