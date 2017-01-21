@@ -9,6 +9,6 @@
 #import <SpriteKit/SpriteKit.h>
 #import "Background.h"
 
-@interface GameScene : SKScene
+@interface GameScene : SKScene <SKPhysicsContactDelegate>
 
 @end

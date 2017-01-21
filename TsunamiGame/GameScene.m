@@ -8,6 +8,12 @@
 
 #import "GameScene.h"
 
+//Physics bodies collisions and contact bitMasks
+static const uint32_t playerCategory =  0x1 << 0;
+static const uint32_t objectCategory =  0x1 << 1;
+static const uint32_t waveCategory =  0x1 << 2;
+static const uint32_t bordersCategory =  0x1 << 3;
+
 //define the background move speed in pixels per frame.
 static NSInteger backgroundMoveSpeed = 150;
 
@@ -31,6 +37,9 @@ static NSInteger backgroundMoveSpeed = 150;
 
 - (void)didMoveToView:(SKView *)view {
     
+    //назначаем делегат для физики
+    self.physicsWorld.contactDelegate = self;
+    
     //Get screen size to use later
     screenWidth = view.bounds.size.width;
     screenHeight = view.bounds.size.height;
@@ -47,6 +56,9 @@ static NSInteger backgroundMoveSpeed = 150;
     
     //add backgrounds
     [self addBackgrounds];
+    
+    //add borders
+    [self addBorders];
 }
 
 #pragma mark - UPDATE METHOD
@@ -119,6 +131,19 @@ static NSInteger backgroundMoveSpeed = 150;
     player.zPosition = 10;
     player.position = CGPointMake(screenWidth/2, screenHeight/2 - screenCell.height);
     
+    player.name = @"player";
+    
+    player.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:player.size];
+    player.physicsBody.affectedByGravity = NO;
+    player.physicsBody.allowsRotation = NO;
+    player.physicsBody.restitution = 0.0;
+    player.physicsBody.friction = 0.0;
+    player.physicsBody.dynamic = YES;
+    
+    player.physicsBody.categoryBitMask = playerCategory;
+    //player.physicsBody.contactTestBitMask = fireballCategory;
+    player.physicsBody.collisionBitMask = objectCategory | bordersCategory;
+    
     _player = player;
     [self addChild:_player];
     NSLog(@"player node created");
@@ -176,6 +201,20 @@ static NSInteger backgroundMoveSpeed = 150;
     NSLog(@"third background node created");
 }
 
+- (void)addBorders {
+
+    CGFloat bottomForBorder = screenHeight * 3;
+    CGFloat heightForBorder = screenHeight * 6;
+    CGRect bordersRect = CGRectMake(0, - bottomForBorder, screenWidth, heightForBorder);
+    SKPhysicsBody *borders = [SKPhysicsBody bodyWithEdgeLoopFromRect:bordersRect];
+    
+    borders.categoryBitMask = bordersCategory;
+    borders.collisionBitMask = playerCategory | objectCategory;
+    borders.contactTestBitMask = 0;
+
+    self.physicsBody = borders;
+}
+
 #pragma mark - TOUCHES
 
  - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -225,5 +264,26 @@ static NSInteger backgroundMoveSpeed = 150;
         SKAction *moveLeftAction = [SKAction moveBy:moveLeftVector duration:moveLeftDuration];
         [_player runAction:moveLeftAction];
 }
+
+#pragma mark - SKPhysicsContactDelegate
+- (void)didBeginContact:(SKPhysicsContact *)contact {
+    
+    SKNode *bodyANode = contact.bodyA.node;
+    SKNode *bodyBNode = contact.bodyB.node;
+    
+    NSLog(@"Body A: %@  Body B: %@",bodyANode.name, bodyBNode.name);
+    
+    /*
+    //fireball VS player
+    if ([bodyANode.name isEqualToString:@"player"] && [bodyBNode.name isEqualToString:@"fireball"] ){
+        
+        [bodyANode removeFromParent];
+        [bodyBNode removeFromParent];
+        
+        [self gameOver];
+     */
+    
+    }
+
 
 @end
