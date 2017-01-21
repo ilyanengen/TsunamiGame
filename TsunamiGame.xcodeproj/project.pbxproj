@@ -67,8 +67,6 @@
 			children = (
 				0919139D1E334ACC005EA095 /* AppDelegate.h */,
 				0919139E1E334ACC005EA095 /* AppDelegate.m */,
-				091913A01E334ACC005EA095 /* GameScene.sks */,
-				091913A21E334ACC005EA095 /* Actions.sks */,
 				091913A41E334ACC005EA095 /* GameScene.h */,
 				091913A51E334ACC005EA095 /* GameScene.m */,
 				091913A71E334ACC005EA095 /* GameViewController.h */,
@@ -85,6 +83,8 @@
 		0919139A1E334ACC005EA095 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				091913A01E334ACC005EA095 /* GameScene.sks */,
+				091913A21E334ACC005EA095 /* Actions.sks */,
 				0919139B1E334ACC005EA095 /* main.m */,
 			);
 			name = "Supporting Files";
