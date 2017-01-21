@@ -15,7 +15,7 @@ static const uint32_t waveCategory =  0x1 << 2;
 static const uint32_t bordersCategory =  0x1 << 3;
 
 //define the background move speed in pixels per frame.
-static NSInteger backgroundMoveSpeed = 250; //было 150
+static NSInteger backgroundMoveSpeed = 300; //было 250
 
 @implementation GameScene {
     
@@ -97,7 +97,7 @@ static NSInteger backgroundMoveSpeed = 250; //было 150
         //if background moves completely off the screen - put it on the top of three background nodes
         if (node.position.y < -(screenHeight * 1.5)) {
             
-            CGPoint topPosition = CGPointMake(_thirdBackground.position.x, _thirdBackground.position.y + _thirdBackground.size.height - 10);//пришлось отнимать по 10 чтобы не было видно стыков между каждыми 3мя картинками дороги
+            CGPoint topPosition = CGPointMake(_thirdBackground.position.x, _thirdBackground.position.y + _thirdBackground.size.height - 20);//пришлось отнимать по 10 чтобы не было видно стыков между каждыми 3мя картинками дороги
             node.position = topPosition;
             NSLog(@"\n\n FIRST NODE WAS PUT ON THE TOP!\n\n");
         }}];
@@ -110,7 +110,7 @@ static NSInteger backgroundMoveSpeed = 250; //было 150
         //if background moves completely off the screen - put it on the top of three background nodes
         if (node.position.y < -(screenHeight * 1.5)) {
             
-            CGPoint topPosition = CGPointMake(_firstBackground.position.x, _firstBackground.position.y + _firstBackground.size.height - 10);//пришлось отнимать по 10 чтобы не было видно стыков между каждыми 3мя картинками дороги
+            CGPoint topPosition = CGPointMake(_firstBackground.position.x, _firstBackground.position.y + _firstBackground.size.height - 20);//пришлось отнимать по 10 чтобы не было видно стыков между каждыми 3мя картинками дороги
 
             node.position = topPosition;
             NSLog(@"\n\n SECOND NODE WAS PUT ON THE TOP!\n\n");
@@ -127,7 +127,7 @@ static NSInteger backgroundMoveSpeed = 250; //было 150
         //if background moves completely off the screen - put it on the top of three background nodes
         if (node.position.y < -(screenHeight * 1.5)) {
             
-            CGPoint topPosition = CGPointMake(_secondBackground.position.x, _secondBackground.position.y + _secondBackground.size.height - 10);//пришлось отнимать по 10 чтобы не было видно стыков между каждыми 3мя картинками дороги
+            CGPoint topPosition = CGPointMake(_secondBackground.position.x, _secondBackground.position.y + _secondBackground.size.height - 20);//пришлось отнимать по 10 чтобы не было видно стыков между каждыми 3мя картинками дороги
 
             node.position = topPosition;
             NSLog(@"\n\n THIRD NODE WAS PUT ON THE TOP!\n\n");
@@ -323,7 +323,7 @@ static NSInteger backgroundMoveSpeed = 250; //было 150
     
     //Объект4 - вертикальная тачка
     CGSize object4Size = CGSizeMake(screenCell.width, screenCell.height * 2);
-    SKSpriteNode *object4 = [SKSpriteNode spriteNodeWithColor:[SKColor greenColor] size:object4Size];
+    SKSpriteNode *object4 = [SKSpriteNode spriteNodeWithColor:[SKColor yellowColor] size:object4Size];
     
     object4.anchorPoint = CGPointMake(0.5, 0.5);
     object4.zPosition = 2;
@@ -366,32 +366,42 @@ static NSInteger backgroundMoveSpeed = 250; //было 150
         
         switch (randomNumber) {
             case 0:
-                NSLog(@"case 0 - horizontal in center");
+                NSLog(@"case 0 - ШИРОКАЯ КОРИЧНЕВАЯ ПО ЦЕНТРУ");
                 _object1.position = CGPointMake(screenWidth/2, screenHeight/2);
                 [spriteNode addChild:_object1];
                 break;
                 
             case 1:
-                NSLog(@"case 1 - vertical in center");
+                NSLog(@"case 1 - ДЛИННАЯ ЗЕЛЁНАЯ В ЦЕНТРЕ");
                 _object2.position = CGPointMake(screenWidth/2, screenHeight/2);
                 [spriteNode addChild:_object2];
                 break;
                 
             case 2:
-                NSLog(@"case 2 - вертикальная слева сверху, горизонтальная справа внизу");
-                _object1.position = CGPointMake(screenCell.width / 2, screenHeight - screenCell.height * 3);
-                [spriteNode addChild:_object1];
-                
-                _object2.position = CGPointMake(screenCell.width * 4, screenCell.height * 2.5);
+                NSLog(@"case 2 - ШИРОКАЯ КОРИЧНЕВАЯ СПРАВА ВНИЗУ, ДЛИННАЯ ЗЕЛЁНАЯ СЛЕВА ВВЕРХУ");
+                _object1.position = CGPointMake(screenCell.width * 4, screenCell.height * 2.5);
                 [spriteNode addChild:_object2];
+            
+                _object2.position = CGPointMake(screenCell.width / 2, screenHeight - screenCell.height * 3);
+                [spriteNode addChild:_object1];
                 break;
                 
             case 3:
-                NSLog(@"case 3");
+                NSLog(@"case 3 - ШИРОКАЯ КОРИЧНЕВАЯ СЛЕВА ВВЕРХУ, ДЛИННАЯ ЗЕЛЕНАЯ СПРАВА ВНИЗУ");
+                _object1.position = CGPointMake(screenCell.width, screenHeight - screenCell.height * 2.5);
+                [spriteNode addChild:_object1];
+                
+                _object2.position = CGPointMake(screenCell.width * 4.5, screenCell.height * 3);
+                [spriteNode addChild:_object2];
                 break;
                 
             case 4:
-                NSLog(@"case 4");
+                NSLog(@"case 4 - ШИРОКАЯ КОРИЧНЕВАЯ СЛЕВА ВНИЗУ, ДЛИННАЯ ЗЕЛЕНАЯ СПРАВА ВВЕРХУ");
+                _object1.position = CGPointMake(screenCell.width, screenCell.height * 2.5);
+                [spriteNode addChild:_object1];
+                
+                _object2.position = CGPointMake(screenCell.width * 4.5, screenHeight - screenCell.height * 3);
+                [spriteNode addChild:_object2];
                 break;
         }
         
@@ -412,15 +422,26 @@ static NSInteger backgroundMoveSpeed = 250; //было 150
                 break;
                 
             case 2:
+                //ВРЕМЕННО
                 NSLog(@"case 2");
+                NSLog(@"case 1 - vertical in center");
+                _object4.position = CGPointMake(screenWidth/2, screenHeight/2);
+                [spriteNode addChild:_object4];
                 break;
                 
             case 3:
+                //ВРЕМЕННО
                 NSLog(@"case 3");
+                NSLog(@"case 0 - horizontal in center");
+                _object3.position = CGPointMake(screenWidth/2, screenHeight/2);
+                [spriteNode addChild:_object3];
                 break;
                 
             case 4:
+                //ВРЕМЕННО
                 NSLog(@"case 4");
+                _object3.position = CGPointMake(screenWidth * 3.5, screenHeight - screenCell.height/2);
+                [spriteNode addChild:_object3];
                 break;
         }
     } else {NSLog(@"!!! ERROR !!! Метод addObjectsOnBackgroundNode был вызван из странного места или в имени backgroundNode'a ошибка");}
