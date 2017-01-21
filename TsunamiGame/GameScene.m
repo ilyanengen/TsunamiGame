@@ -22,13 +22,11 @@ static NSInteger backgroundMoveSpeed = 150;
     SKSpriteNode *_player;
     SKSpriteNode *_wave;
     Background *_firstBackground;
-    
-    //background
-    Background *_currentBackground;
+    Background *_secondBackground;
+    Background *_thirdBackground;
     
     NSTimeInterval _lastUpdateTimeInterval;
     NSTimeInterval _timeSinceLast;
-
 }
 
 - (void)didMoveToView:(SKView *)view {
@@ -47,8 +45,8 @@ static NSInteger backgroundMoveSpeed = 150;
     //add wave
     [self addWave];
     
-    //add background
-    [self addBackground];
+    //add backgrounds
+    [self addBackgrounds];
 }
 
 #pragma mark - UPDATE METHOD
@@ -65,43 +63,48 @@ static NSInteger backgroundMoveSpeed = 150;
         _lastUpdateTimeInterval = currentTime;
     }
     
-    //BACKGROUND MOVEMENT, calculation of background move speed
-    //FIRST BACKGROUND
-
+    //BACKGROUND MOVEMENT
+    
+    //1st background movement
     [self enumerateChildNodesWithName:_firstBackground.name usingBlock:^(SKNode *node, BOOL *stop) {
+        //calculation of background move speed
         node.position = CGPointMake(node.position.x, node.position.y - backgroundMoveSpeed * _timeSinceLast);
         
-        //if background moves completely off the screen + extra 100 pixels -> remove that background from the parent node
-        if (node.position.y < -(node.frame.size.width * 2)) {
-            [node removeFromParent];
-            NSLog(@"\n\n NODE WAS REMOVED FROM PARENT!\n\n");
+        //if background moves completely off the screen - put it on the top of three background nodes
+        if (node.position.y < -(screenHeight * 1.5)) {
+            
+            CGPoint topPosition = CGPointMake(_thirdBackground.position.x, _thirdBackground.position.y + _thirdBackground.size.height - 10);//пришлось отнимать по 10 чтобы не было видно стыков между каждыми 3мя картинками дороги
+            node.position = topPosition;
+            NSLog(@"\n\n FIRST NODE WAS PUT ON THE TOP!\n\n");
         }}];
     
-    if (_firstBackground.position.y < 0) {
-        
-        Background *newBackground = [Background generateNewBackground];
-        newBackground.size = CGSizeMake(screenWidth, screenHeight);
-        newBackground.position = CGPointMake(0, _currentBackground.position.y + screenHeight);
-        [self addChild:newBackground];
-        _currentBackground = newBackground;
-    }
-    
-    //Second Background = CURRENT BACKGROUND
-    [self enumerateChildNodesWithName:_currentBackground.name usingBlock:^(SKNode *node, BOOL *stop) {
+    //2nd background movement
+    [self enumerateChildNodesWithName:_secondBackground.name usingBlock:^(SKNode *node, BOOL *stop) {
+        //calculation of background move speed
         node.position = CGPointMake(node.position.x, node.position.y - backgroundMoveSpeed * _timeSinceLast);
         
-        //if background moves completely off the screen + extra 100 pixels -> remove that background from the parent node
-        if (node.position.y < -(node.frame.size.width * 2)) {
-            [node removeFromParent];
-            NSLog(@"\n\n NODE WAS REMOVED FROM PARENT!\n\n");
+        //if background moves completely off the screen - put it on the top of three background nodes
+        if (node.position.y < -(screenHeight * 1.5)) {
+            
+            CGPoint topPosition = CGPointMake(_firstBackground.position.x, _firstBackground.position.y + _firstBackground.size.height - 10);//пришлось отнимать по 10 чтобы не было видно стыков между каждыми 3мя картинками дороги
+
+            node.position = topPosition;
+            NSLog(@"\n\n SECOND NODE WAS PUT ON THE TOP!\n\n");
         }}];
-    
-    
-    //we create new background node and set it as background
-    
-    //Может создавать новый background когда старый фон ушел вниз на -1 по y ???
-    
-   
+
+    //3rd background movement
+    [self enumerateChildNodesWithName:_thirdBackground.name usingBlock:^(SKNode *node, BOOL *stop) {
+        //calculation of background move speed
+        node.position = CGPointMake(node.position.x, node.position.y - backgroundMoveSpeed * _timeSinceLast);
+        
+        //if background moves completely off the screen - put it on the top of three background nodes
+        if (node.position.y < -(screenHeight * 1.5)) {
+            
+            CGPoint topPosition = CGPointMake(_secondBackground.position.x, _secondBackground.position.y + _secondBackground.size.height - 10);//пришлось отнимать по 10 чтобы не было видно стыков между каждыми 3мя картинками дороги
+
+            node.position = topPosition;
+            NSLog(@"\n\n THIRD NODE WAS PUT ON THE TOP!\n\n");
+        }}];
 }
 
 #pragma mark - Add main nodes
@@ -133,18 +136,42 @@ static NSInteger backgroundMoveSpeed = 150;
     NSLog(@"wave node created");
 }
 
-- (void)addBackground {
+- (void)addBackgrounds {
 
-    Background *background = [Background generateNewBackground];
-    background.size = CGSizeMake(screenWidth, screenHeight);
+    CGSize backgroundSize = CGSizeMake(screenWidth, screenHeight);
     
-    background.position = CGPointZero;
+    //FIRST BACKGROUND
+    Background *firstBackground = [Background generateNewBackground];
+    firstBackground.size = backgroundSize;
     
-    background.name = @"first background";
+    firstBackground.position = CGPointZero;
+    firstBackground.name = @"first background";
     
-    _firstBackground = background;
+    _firstBackground = firstBackground;
     [self addChild:_firstBackground];
     NSLog(@"first background node created");
+    
+    //SECOND BACKGROUND
+    Background *secondBackground = [Background generateNewBackground];
+    secondBackground.size = backgroundSize;
+    
+    secondBackground.position = CGPointMake(0, firstBackground.position.y + backgroundSize.height);
+    secondBackground.name = @"second background";
+    
+    _secondBackground = secondBackground;
+    [self addChild:_secondBackground];
+    NSLog(@"second background node created");
+
+    //THIRD BACKGROUND
+    Background *thirdBackground = [Background generateNewBackground];
+    thirdBackground.size = backgroundSize;
+    
+    thirdBackground.position = CGPointMake(0, secondBackground.position.y + backgroundSize.height);
+    thirdBackground.name = @"third background";
+    
+    _thirdBackground = thirdBackground;
+    [self addChild:_thirdBackground];
+    NSLog(@"third background node created");
 }
 
 #pragma mark - TOUCHES
