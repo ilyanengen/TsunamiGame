@@ -14,7 +14,6 @@
 
     Background *background = [[Background alloc]initWithImageNamed:@"road.png"];
     background.anchorPoint = CGPointZero;
-    background.position = CGPointZero;
     background.zPosition = 1;
     background.name = @"background";
     

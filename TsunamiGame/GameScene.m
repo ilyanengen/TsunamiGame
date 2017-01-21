@@ -79,7 +79,9 @@ static NSInteger backgroundMoveSpeed = 150;
     //Может создавать новый background когда старый фон ушел вниз на -1 по y ???
     
     if (_currentBackground.position.y < -500) {
+        
         Background *newBackground = [Background generateNewBackground];
+        newBackground.size = CGSizeMake(screenWidth, screenHeight);
         newBackground.position = CGPointMake(0, _currentBackground.position.y + screenHeight);
         [self addChild:newBackground];
         _currentBackground = newBackground;
@@ -115,13 +117,14 @@ static NSInteger backgroundMoveSpeed = 150;
 
 - (void)addBackground {
 
-    Background *background = [[Background alloc]initWithColor:[SKColor lightGrayColor] size:CGSizeMake(screenWidth, screenHeight)];
+    //Background *background = [[Background alloc]initWithColor:[SKColor lightGrayColor] size:CGSizeMake(screenWidth, screenHeight)];
     
-    background.anchorPoint = CGPointZero;
-    background.zPosition = 1;
+    Background *background = [Background generateNewBackground];
+    background.size = CGSizeMake(screenWidth, screenHeight);
+    
     background.position = CGPointZero;
     
-    background.name = @"one background";
+    background.name = @"first background";
     
     _currentBackground = background;
     [self addChild:_currentBackground];
