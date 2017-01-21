@@ -8,16 +8,27 @@
 
 #import "GameScene.h"
 
+//define the background move speed in pixels per frame.
+static NSInteger backgroundMoveSpeed = 150;
+
 @implementation GameScene {
-    //SKShapeNode *_spinnyNode;
     
+    //screen size
     CGFloat screenHeight;
     CGFloat screenWidth;
     CGSize screenCell;
     
+    //Main nodes
     SKSpriteNode *_player;
     SKSpriteNode *_wave;
     SKSpriteNode *_background;
+    
+    //background
+    SKSpriteNode *_currentBackground;
+    
+    NSTimeInterval _lastUpdateTimeInterval;
+    NSTimeInterval _timeSinceLast;
+
 }
 
 - (void)didMoveToView:(SKView *)view {
@@ -40,9 +51,39 @@
     [self addBackground];
 }
 
-
+#pragma mark - UPDATE METHOD
 -(void)update:(CFTimeInterval)currentTime {
     // Called before each frame is rendered
+    
+    //calculation of time since last update to calculate the movement speed of background.
+    _timeSinceLast = currentTime - _lastUpdateTimeInterval;
+    _lastUpdateTimeInterval = currentTime;
+    
+    //if too much time passed since last update - sms, phone call etc.
+    if (_timeSinceLast > 1) {
+        _timeSinceLast = 1.0/ 60.0;
+        _lastUpdateTimeInterval = currentTime;
+    }
+    
+    //calculation of background move speed
+    [self enumerateChildNodesWithName:_currentBackground.name usingBlock:^(SKNode *node, BOOL *stop) {
+        node.position = CGPointMake(node.position.x, node.position.y - backgroundMoveSpeed * _timeSinceLast);
+        
+        //if background moves completely off the screen + extra 100 pixels -> remove that background from the parent node
+        if (node.position.x < -(node.frame.size.width+100)) {
+            [node removeFromParent];
+        }}];
+    
+    //we create new background node and set it as background
+    
+    //Может создавать новый background когда старый фон ушел вниз на -1 по y ???
+    
+    if (_currentBackground.position.y < -500) {
+        Background *newBackground = [Background generateNewBackground];
+        newBackground.position = CGPointMake(0, _currentBackground.position.y + screenHeight);
+        [self addChild:newBackground];
+        _currentBackground = newBackground;
+    }
 }
 
 #pragma mark - Add main nodes
@@ -80,8 +121,10 @@
     background.zPosition = 1;
     background.position = CGPointZero;
     
-    _background = background;
-    [self addChild:_background];
+    background.name = @"one background";
+    
+    _currentBackground = background;
+    [self addChild:_currentBackground];
 }
 
 #pragma mark - TOUCHES
@@ -132,7 +175,6 @@
     CGVector moveLeftVector = CGVectorMake(-screenCell.width, 0);
     SKAction *moveLeftAction = [SKAction moveBy:moveLeftVector duration:moveLeftDuration];
     [_player runAction:moveLeftAction];
-
 }
 
 @end

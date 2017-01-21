@@ -10,4 +10,6 @@
 
 @interface Background : SKSpriteNode
 
++(Background *)generateNewBackground;
+
 @end
