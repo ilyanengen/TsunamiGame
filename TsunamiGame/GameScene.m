@@ -141,7 +141,7 @@ static NSInteger backgroundMoveSpeed = 150;
     player.physicsBody.dynamic = YES;
     
     player.physicsBody.categoryBitMask = playerCategory;
-    //player.physicsBody.contactTestBitMask = fireballCategory;
+    player.physicsBody.contactTestBitMask = waveCategory;
     player.physicsBody.collisionBitMask = objectCategory | bordersCategory;
     
     _player = player;
@@ -157,6 +157,17 @@ static NSInteger backgroundMoveSpeed = 150;
     wave.anchorPoint = CGPointMake(0,0);
     wave.zPosition = 11;
     wave.position = CGPointZero;
+    
+    wave.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:wave.size];
+    wave.physicsBody.affectedByGravity = NO;
+    wave.physicsBody.allowsRotation = NO;
+    wave.physicsBody.restitution = 0.0;
+    wave.physicsBody.friction = 0.0;
+    wave.physicsBody.dynamic = YES;
+    
+    wave.physicsBody.categoryBitMask = waveCategory;
+    wave.physicsBody.contactTestBitMask = playerCategory;
+    wave.physicsBody.collisionBitMask = 0;
     
     _wave = wave;
     [self addChild:_wave];
