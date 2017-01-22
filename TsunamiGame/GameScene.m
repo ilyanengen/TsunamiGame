@@ -651,7 +651,7 @@ static const uint32_t bordersCategory =  0x1 << 3;
 
 -(void)increaseSpeed {
     
-    _backgroundMoveSpeed = _backgroundMoveSpeed + 3;
+    _backgroundMoveSpeed = _backgroundMoveSpeed + 10; //было 3
     _speedometerInteger = _backgroundMoveSpeed / 5;
     _speedometerLabel.text = [NSString stringWithFormat:@"%ld km/h", _speedometerInteger];
 }
