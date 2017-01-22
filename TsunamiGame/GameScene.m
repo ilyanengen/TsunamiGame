@@ -14,8 +14,6 @@ static const uint32_t objectCategory =  0x1 << 1;
 static const uint32_t waveCategory =  0x1 << 2;
 static const uint32_t bordersCategory =  0x1 << 3;
 
-
-
 @implementation GameScene {
     
     //for update method
@@ -47,6 +45,8 @@ static const uint32_t bordersCategory =  0x1 << 3;
     NSInteger _backgroundMoveSpeed; //было 250 //define the background move speed in pixels per frame.
     
     BOOL _gameIsOver;
+    BOOL _youWin;
+    
     NSInteger _kilometersRemain;
     SKLabelNode *_kilometersRemainLabel;
     
@@ -57,6 +57,8 @@ static const uint32_t bordersCategory =  0x1 << 3;
 }
 
 - (void)didMoveToView:(SKView *)view {
+    
+    _youWin = NO;
     
     //назначаем делегат для физики
     self.physicsWorld.contactDelegate = self;
@@ -107,6 +109,11 @@ static const uint32_t bordersCategory =  0x1 << 3;
         _timeSinceLast = 1.0/ 60.0;
         _lastUpdateTimeInterval = currentTime;
     }
+    
+    //IF the KilometersRemain is 0 - YOU WIN
+    if (_kilometersRemain > 0) {
+        
+    
     
     //IF THE GAME IS NOT OVER YET
     if (!_gameIsOver) {
@@ -179,9 +186,13 @@ static const uint32_t bordersCategory =  0x1 << 3;
         
         [self gameOver];
     }
-    
-    }//game over bool
-    
+}//game over bool
+    }else {
+        
+        _youWin = YES;
+        [self waveMoveDown];
+        [self playerMoveUp];
+    }
 }
 
 #pragma mark - Add main nodes
@@ -602,6 +613,23 @@ static const uint32_t bordersCategory =  0x1 << 3;
     [_wave runAction:waveMoveUpAction completion:^{
         
         [self addGameOverLabel];
+    }];
+}
+
+-(void)waveMoveDown {
+
+    SKAction *waveMoveDownAction = [SKAction moveToY:0 duration:2];
+    [_wave runAction:waveMoveDownAction completion:^{
+        
+        NSLog(@"waveMoveDown");
+    }];
+}
+
+-(void)playerMoveUp {
+
+    SKAction *playerMoveUpAction = [SKAction moveToY:screenHeight + _player.size.height duration:1];
+    [_wave runAction:playerMoveUpAction completion:^{
+        NSLog(@"run playerMoveUpAction");
     }];
 }
 
