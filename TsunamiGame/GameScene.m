@@ -14,8 +14,7 @@ static const uint32_t objectCategory =  0x1 << 1;
 static const uint32_t waveCategory =  0x1 << 2;
 static const uint32_t bordersCategory =  0x1 << 3;
 
-//define the background move speed in pixels per frame.
-static NSInteger backgroundMoveSpeed = 300; //было 250
+
 
 @implementation GameScene {
     
@@ -44,7 +43,15 @@ static NSInteger backgroundMoveSpeed = 300; //было 250
     SKSpriteNode *_object4;
     
     //GAME MECHANIC
+    
+    NSInteger _backgroundMoveSpeed; //было 250 //define the background move speed in pixels per frame.
+    
     BOOL _gameIsOver;
+    NSInteger _kilometersRemain;
+    SKLabelNode *_kilometersRemainLabel;
+    
+    NSInteger _speedometerInteger;
+    SKLabelNode *_speedometerLabel;
 }
 
 - (void)didMoveToView:(SKView *)view {
@@ -60,6 +67,9 @@ static NSInteger backgroundMoveSpeed = 300; //было 250
     screenCell = CGSizeMake(screenWidth/5, screenWidth/5);
     NSLog(@"screenCell = (%f, %f)", screenCell.width, screenCell.height);
     
+    //назначаем скорость движения
+    _backgroundMoveSpeed = 300;
+    
     //add player
     [self addPlayer];
     
@@ -74,6 +84,12 @@ static NSInteger backgroundMoveSpeed = 300; //было 250
     
     //add objects
     [self addObjects];
+
+    //add kilometers remain label
+    [self addKilometersRemainLabel];
+    
+    //add speedometer
+    [self addSpeedometer];
 }
 
 #pragma mark - UPDATE METHOD
@@ -99,7 +115,7 @@ static NSInteger backgroundMoveSpeed = 300; //было 250
     //1st background movement
     [self enumerateChildNodesWithName:_firstBackground.name usingBlock:^(SKNode *node, BOOL *stop) {
         //calculation of background move speed
-        node.position = CGPointMake(node.position.x, node.position.y - backgroundMoveSpeed * _timeSinceLast);
+        node.position = CGPointMake(node.position.x, node.position.y - _backgroundMoveSpeed * _timeSinceLast);
         
         //if background moves completely off the screen - put it on the top of three background nodes
         if (node.position.y < -(screenHeight * 1.5)) {
@@ -112,7 +128,7 @@ static NSInteger backgroundMoveSpeed = 300; //было 250
     //2nd background movement
     [self enumerateChildNodesWithName:_secondBackground.name usingBlock:^(SKNode *node, BOOL *stop) {
         //calculation of background move speed
-        node.position = CGPointMake(node.position.x, node.position.y - backgroundMoveSpeed * _timeSinceLast);
+        node.position = CGPointMake(node.position.x, node.position.y - _backgroundMoveSpeed * _timeSinceLast);
         
         //if background moves completely off the screen - put it on the top of three background nodes
         if (node.position.y < -(screenHeight * 1.5)) {
@@ -129,7 +145,7 @@ static NSInteger backgroundMoveSpeed = 300; //было 250
     //3rd background movement
     [self enumerateChildNodesWithName:_thirdBackground.name usingBlock:^(SKNode *node, BOOL *stop) {
         //calculation of background move speed
-        node.position = CGPointMake(node.position.x, node.position.y - backgroundMoveSpeed * _timeSinceLast);
+        node.position = CGPointMake(node.position.x, node.position.y - _backgroundMoveSpeed * _timeSinceLast);
         
         //if background moves completely off the screen - put it on the top of three background nodes
         if (node.position.y < -(screenHeight * 1.5)) {
@@ -141,7 +157,14 @@ static NSInteger backgroundMoveSpeed = 300; //было 250
             
  //!!!           //добавляем объекты на этот нод пока он не виден
             [self addObjectsOnBackgroundNode:_thirdBackground];
-        
+            
+//Счетчик километров!
+            
+            [self decreaseKilometers];
+            
+//Увеличиваем скорость!!!
+            
+            [self increaseSpeed];
         }}];
     
     //NSLog(@"player's position = (%f, %f)", _player.position.x, _player.position.y);
@@ -152,8 +175,7 @@ static NSInteger backgroundMoveSpeed = 300; //было 250
     if (playerMinY <= _wave.position.y) {
         NSLog(@"PLAYER MIN Y IS <= WAVE POSITION Y");
         
-        _gameIsOver = YES;
-        [self waveMoveUp];
+        [self gameOver];
     }
     
     }//game over bool
@@ -472,6 +494,37 @@ static NSInteger backgroundMoveSpeed = 300; //было 250
     
 }
 
+- (void)addKilometersRemainLabel {
+    
+    _kilometersRemain = 100;
+    NSString *kilometersRemainString = [NSString stringWithFormat:@"%ld km", _kilometersRemain];
+    
+    SKLabelNode *kilometersRemainLabel = [SKLabelNode labelNodeWithFontNamed:@"San Francisco"];
+    kilometersRemainLabel.text = kilometersRemainString;
+    kilometersRemainLabel.fontColor = [SKColor whiteColor];
+    kilometersRemainLabel.fontSize = 24;
+    kilometersRemainLabel.zPosition = 100;
+    kilometersRemainLabel.position = CGPointMake(screenWidth - screenCell.width, screenHeight - screenCell.height/2);
+    _kilometersRemainLabel = kilometersRemainLabel;
+    [self addChild:_kilometersRemainLabel];
+}
+
+- (void)addSpeedometer {
+
+    _speedometerInteger = _backgroundMoveSpeed / 5;
+    NSString *speedometerString = [NSString stringWithFormat:@"%ld km/h", _speedometerInteger];
+    
+    SKLabelNode *speedometerLabel = [SKLabelNode labelNodeWithFontNamed:@"San Francisco"];
+    speedometerLabel.text = speedometerString;
+    speedometerLabel.fontColor = [SKColor whiteColor];
+    speedometerLabel.fontSize = 24;
+    speedometerLabel.zPosition = 100;
+    speedometerLabel.position = CGPointMake(screenWidth - screenCell.width, screenHeight - screenCell.height);
+    _speedometerLabel = speedometerLabel;
+    [self addChild:_speedometerLabel];
+
+}
+
 #pragma mark - TOUCHES
 
  - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -543,7 +596,29 @@ static NSInteger backgroundMoveSpeed = 300; //было 250
 #pragma mark - GAME OVER
 - (void)gameOver {
     
-        NSLog(@"\n\nGAME OVER\n\n");
-    }
+    NSLog(@"\n\nGAME OVER\n\n");
+    _gameIsOver = YES;
     
+    [self waveMoveUp];
+    _speedometerLabel.hidden = YES;
+    _kilometersRemainLabel.hidden = YES;
+
+}
+
+#pragma mark - GAME MECHANIC
+
+-(void)decreaseKilometers {
+
+    _kilometersRemain = _kilometersRemain - 1;
+    _kilometersRemainLabel.text = [NSString stringWithFormat:@"%ld km", _kilometersRemain];
+}
+
+-(void)increaseSpeed {
+    
+    _backgroundMoveSpeed = _backgroundMoveSpeed + 3;
+    _speedometerInteger = _backgroundMoveSpeed / 5;
+    _speedometerLabel.text = [NSString stringWithFormat:@"%ld km/h", _speedometerInteger];
+}
+
+
 @end
