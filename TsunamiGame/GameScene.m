@@ -42,6 +42,9 @@ static NSInteger backgroundMoveSpeed = 300; //было 250
     SKSpriteNode *_object2;
     SKSpriteNode *_object3;
     SKSpriteNode *_object4;
+    
+    //GAME MECHANIC
+    BOOL _gameIsOver;
 }
 
 - (void)didMoveToView:(SKView *)view {
@@ -86,6 +89,10 @@ static NSInteger backgroundMoveSpeed = 300; //было 250
         _timeSinceLast = 1.0/ 60.0;
         _lastUpdateTimeInterval = currentTime;
     }
+    
+    //IF THE GAME IS NOT OVER YET
+    if (!_gameIsOver) {
+        
     
     //BACKGROUND MOVEMENT
     
@@ -138,6 +145,19 @@ static NSInteger backgroundMoveSpeed = 300; //было 250
         }}];
     
     //NSLog(@"player's position = (%f, %f)", _player.position.x, _player.position.y);
+    
+    //Если Волна покраывает машину PLAYER'a волна накрывает весь экран
+    
+        CGFloat playerMinY = _player.position.y - _player.size.height / 2;
+    if (playerMinY <= _wave.position.y) {
+        NSLog(@"PLAYER MIN Y IS <= WAVE POSITION Y");
+        
+        _gameIsOver = YES;
+        [self waveMoveUp];
+    }
+    
+    }//game over bool
+    
 }
 
 #pragma mark - Add main nodes
@@ -148,7 +168,9 @@ static NSInteger backgroundMoveSpeed = 300; //было 250
     //SKSpriteNode *player = [SKSpriteNode spriteNodeWithImageNamed:@"pickup.png"];
     
     player.anchorPoint = CGPointMake(0.5, 0.5);
+    
     player.zPosition = 10;
+    
     player.position = CGPointMake(screenWidth/2, screenHeight/2 - screenCell.height);
     
     player.name = @"player";
@@ -163,7 +185,7 @@ static NSInteger backgroundMoveSpeed = 300; //было 250
     player.physicsBody.categoryBitMask = playerCategory;
     player.physicsBody.contactTestBitMask = waveCategory;
     player.physicsBody.collisionBitMask = objectCategory | bordersCategory;
-    
+
     //SKTexture *playerTexture = [SKTexture textureWithImageNamed:@"pickup.png"];
     //player.texture = playerTexture;
     
@@ -174,16 +196,18 @@ static NSInteger backgroundMoveSpeed = 300; //было 250
 
 - (void)addWave {
 
-    CGSize waveSize = CGSizeMake(screenWidth, screenCell.width);
+    //высота волна на экране в обычнеое время - screenCell.width
+    
+    CGSize waveSize = CGSizeMake(screenWidth, screenHeight + 100);
     SKSpriteNode *wave = [SKSpriteNode spriteNodeWithColor:[SKColor blueColor] size:waveSize];
     
-    wave.anchorPoint = CGPointMake(0,0);
+    wave.anchorPoint = CGPointMake(0.5, 1);
     wave.zPosition = 11;
-    wave.position = CGPointZero;
+    wave.position = CGPointMake(screenWidth / 2, screenCell.height);
     
     wave.name = @"wave";
     
-    wave.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:wave.size];
+    wave.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:waveSize];
     wave.physicsBody.affectedByGravity = NO;
     wave.physicsBody.allowsRotation = NO;
     wave.physicsBody.restitution = 0.0;
@@ -498,6 +522,14 @@ static NSInteger backgroundMoveSpeed = 300; //было 250
         [_player runAction:moveLeftAction];
 }
 
+-(void)waveMoveUp {
+
+    SKAction *waveMoveUpAction = [SKAction moveToY:screenHeight duration:1];
+    [_wave runAction:waveMoveUpAction completion:^{
+        [self gameOver];
+    }];
+}
+
 #pragma mark - SKPhysicsContactDelegate
 - (void)didBeginContact:(SKPhysicsContact *)contact {
     
@@ -506,16 +538,12 @@ static NSInteger backgroundMoveSpeed = 300; //было 250
     
     NSLog(@"Body A: %@  Body B: %@",bodyANode.name, bodyBNode.name);
     
-    /*
-    //fireball VS player
-    if ([bodyANode.name isEqualToString:@"player"] && [bodyBNode.name isEqualToString:@"fireball"] ){
-        
-        [bodyANode removeFromParent];
-        [bodyBNode removeFromParent];
-        
-        [self gameOver];
-     */
-    
-    }
+}
 
+#pragma mark - GAME OVER
+- (void)gameOver {
+    
+        NSLog(@"\n\nGAME OVER\n\n");
+    }
+    
 @end
