@@ -189,7 +189,7 @@ static const uint32_t bordersCategory =  0x1 << 3;
 
     CGSize playerSize = CGSizeMake(screenCell.width, screenCell.width * 2);
     //SKSpriteNode *player = [SKSpriteNode spriteNodeWithColor:[SKColor redColor] size:playerSize];
-    SKSpriteNode *player = [SKSpriteNode spriteNodeWithImageNamed:@"ambulance.png"];
+    SKSpriteNode *player = [SKSpriteNode spriteNodeWithImageNamed:@"pickup.png"];
     
     player.anchorPoint = CGPointMake(0.5, 0.5);
     
@@ -249,7 +249,7 @@ static const uint32_t bordersCategory =  0x1 << 3;
     [self addChild:_wave];
     NSLog(@"wave node created");
     
-    //ANIMATION//
+    //ANIMATION OF WAVE
     
     // Running player animation
     SKTexture * runTexture1 = [SKTexture textureWithImageNamed:@"volna1.png"];
@@ -320,7 +320,8 @@ static const uint32_t bordersCategory =  0x1 << 3;
     
     //Объект1 - горизонтальная тачка
     CGSize object1Size = CGSizeMake(screenCell.width * 2, screenCell.height);
-    SKSpriteNode *object1 = [SKSpriteNode spriteNodeWithColor:[SKColor brownColor] size:object1Size];
+    //SKSpriteNode *object1 = [SKSpriteNode spriteNodeWithColor:[SKColor brownColor] size:object1Size];
+    SKSpriteNode *object1 = [SKSpriteNode spriteNodeWithImageNamed:@"orangeCarSide.png"];
     
     object1.anchorPoint = CGPointMake(0.5, 0.5);
     object1.zPosition = 2;
@@ -342,7 +343,8 @@ static const uint32_t bordersCategory =  0x1 << 3;
     
     //Объект2 - вертикальная тачка
     CGSize object2Size = CGSizeMake(screenCell.width, screenCell.height * 2);
-    SKSpriteNode *object2 = [SKSpriteNode spriteNodeWithColor:[SKColor greenColor] size:object2Size];
+    //SKSpriteNode *object2 = [SKSpriteNode spriteNodeWithColor:[SKColor greenColor] size:object2Size];
+    SKSpriteNode *object2 = [SKSpriteNode spriteNodeWithImageNamed:@"ambulance.png"];
     
     object2.anchorPoint = CGPointMake(0.5, 0.5);
     object2.zPosition = 2;
@@ -364,7 +366,8 @@ static const uint32_t bordersCategory =  0x1 << 3;
     
     //Объект3 - горизонтальная тачка
     CGSize object3Size = CGSizeMake(screenCell.width * 2, screenCell.height);
-    SKSpriteNode *object3 = [SKSpriteNode spriteNodeWithColor:[SKColor blackColor] size:object3Size];
+    //SKSpriteNode *object3 = [SKSpriteNode spriteNodeWithColor:[SKColor blackColor] size:object3Size];
+    SKSpriteNode *object3 = [SKSpriteNode spriteNodeWithImageNamed:@"taxiSide.png"];
     
     object3.anchorPoint = CGPointMake(0.5, 0.5);
     object3.zPosition = 2;
@@ -386,7 +389,8 @@ static const uint32_t bordersCategory =  0x1 << 3;
     
     //Объект4 - вертикальная тачка
     CGSize object4Size = CGSizeMake(screenCell.width, screenCell.height * 2);
-    SKSpriteNode *object4 = [SKSpriteNode spriteNodeWithColor:[SKColor yellowColor] size:object4Size];
+    //SKSpriteNode *object4 = [SKSpriteNode spriteNodeWithColor:[SKColor yellowColor] size:object4Size];
+    SKSpriteNode *object4 = [SKSpriteNode spriteNodeWithImageNamed:@"police.png"];
     
     object4.anchorPoint = CGPointMake(0.5, 0.5);
     object4.zPosition = 2;

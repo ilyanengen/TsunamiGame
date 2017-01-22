@@ -21,7 +21,13 @@
 		09F917841E34D29D00F29DC6 /* volna1.png in Resources */ = {isa = PBXBuildFile; fileRef = 09F917811E34D29D00F29DC6 /* volna1.png */; };
 		09F917851E34D29D00F29DC6 /* volna2.png in Resources */ = {isa = PBXBuildFile; fileRef = 09F917821E34D29D00F29DC6 /* volna2.png */; };
 		09F917861E34D29D00F29DC6 /* volna3.png in Resources */ = {isa = PBXBuildFile; fileRef = 09F917831E34D29D00F29DC6 /* volna3.png */; };
-		09F917881E34D4DE00F29DC6 /* ambulance.png in Resources */ = {isa = PBXBuildFile; fileRef = 09F917871E34D4DE00F29DC6 /* ambulance.png */; };
+		09F917981E34DA5100F29DC6 /* ambulance.png in Resources */ = {isa = PBXBuildFile; fileRef = 09F917911E34DA5100F29DC6 /* ambulance.png */; };
+		09F917991E34DA5100F29DC6 /* orangeCar.png in Resources */ = {isa = PBXBuildFile; fileRef = 09F917921E34DA5100F29DC6 /* orangeCar.png */; };
+		09F9179A1E34DA5100F29DC6 /* orangeCarSide.png in Resources */ = {isa = PBXBuildFile; fileRef = 09F917931E34DA5100F29DC6 /* orangeCarSide.png */; };
+		09F9179B1E34DA5100F29DC6 /* pickup.png in Resources */ = {isa = PBXBuildFile; fileRef = 09F917941E34DA5100F29DC6 /* pickup.png */; };
+		09F9179C1E34DA5100F29DC6 /* police.png in Resources */ = {isa = PBXBuildFile; fileRef = 09F917951E34DA5100F29DC6 /* police.png */; };
+		09F9179D1E34DA5100F29DC6 /* taxi.png in Resources */ = {isa = PBXBuildFile; fileRef = 09F917961E34DA5100F29DC6 /* taxi.png */; };
+		09F9179E1E34DA5100F29DC6 /* taxiSide.png in Resources */ = {isa = PBXBuildFile; fileRef = 09F917971E34DA5100F29DC6 /* taxiSide.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,7 +51,13 @@
 		09F917811E34D29D00F29DC6 /* volna1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = volna1.png; sourceTree = "<group>"; };
 		09F917821E34D29D00F29DC6 /* volna2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = volna2.png; sourceTree = "<group>"; };
 		09F917831E34D29D00F29DC6 /* volna3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = volna3.png; sourceTree = "<group>"; };
-		09F917871E34D4DE00F29DC6 /* ambulance.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ambulance.png; sourceTree = "<group>"; };
+		09F917911E34DA5100F29DC6 /* ambulance.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ambulance.png; sourceTree = "<group>"; };
+		09F917921E34DA5100F29DC6 /* orangeCar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orangeCar.png; sourceTree = "<group>"; };
+		09F917931E34DA5100F29DC6 /* orangeCarSide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orangeCarSide.png; sourceTree = "<group>"; };
+		09F917941E34DA5100F29DC6 /* pickup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pickup.png; sourceTree = "<group>"; };
+		09F917951E34DA5100F29DC6 /* police.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = police.png; sourceTree = "<group>"; };
+		09F917961E34DA5100F29DC6 /* taxi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = taxi.png; sourceTree = "<group>"; };
+		09F917971E34DA5100F29DC6 /* taxiSide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = taxiSide.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,7 +121,13 @@
 		091913BB1E3374BE005EA095 /* Art */ = {
 			isa = PBXGroup;
 			children = (
-				09F917871E34D4DE00F29DC6 /* ambulance.png */,
+				09F917911E34DA5100F29DC6 /* ambulance.png */,
+				09F917921E34DA5100F29DC6 /* orangeCar.png */,
+				09F917931E34DA5100F29DC6 /* orangeCarSide.png */,
+				09F917941E34DA5100F29DC6 /* pickup.png */,
+				09F917951E34DA5100F29DC6 /* police.png */,
+				09F917961E34DA5100F29DC6 /* taxi.png */,
+				09F917971E34DA5100F29DC6 /* taxiSide.png */,
 				09F917811E34D29D00F29DC6 /* volna1.png */,
 				09F917821E34D29D00F29DC6 /* volna2.png */,
 				09F917831E34D29D00F29DC6 /* volna3.png */,
@@ -177,16 +195,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09F9179B1E34DA5100F29DC6 /* pickup.png in Resources */,
+				09F9179C1E34DA5100F29DC6 /* police.png in Resources */,
 				091913AC1E334ACC005EA095 /* Main.storyboard in Resources */,
 				091913A11E334ACC005EA095 /* GameScene.sks in Resources */,
-				09F917881E34D4DE00F29DC6 /* ambulance.png in Resources */,
+				09F917981E34DA5100F29DC6 /* ambulance.png in Resources */,
+				09F917991E34DA5100F29DC6 /* orangeCar.png in Resources */,
 				091913AE1E334ACC005EA095 /* Assets.xcassets in Resources */,
 				091913B11E334ACC005EA095 /* LaunchScreen.storyboard in Resources */,
 				09F917861E34D29D00F29DC6 /* volna3.png in Resources */,
 				091913A31E334ACC005EA095 /* Actions.sks in Resources */,
+				09F9179E1E34DA5100F29DC6 /* taxiSide.png in Resources */,
 				09F917841E34D29D00F29DC6 /* volna1.png in Resources */,
+				09F9179D1E34DA5100F29DC6 /* taxi.png in Resources */,
 				09F917851E34D29D00F29DC6 /* volna2.png in Resources */,
 				09F917781E34C6F400F29DC6 /* road1.jpg in Resources */,
+				09F9179A1E34DA5100F29DC6 /* orangeCarSide.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
