@@ -52,6 +52,8 @@ static const uint32_t bordersCategory =  0x1 << 3;
     
     NSInteger _speedometerInteger;
     SKLabelNode *_speedometerLabel;
+    
+    SKLabelNode *_gameOverLabel;
 }
 
 - (void)didMoveToView:(SKView *)view {
@@ -186,8 +188,8 @@ static const uint32_t bordersCategory =  0x1 << 3;
 - (void)addPlayer {
 
     CGSize playerSize = CGSizeMake(screenCell.width, screenCell.width * 2);
-    SKSpriteNode *player = [SKSpriteNode spriteNodeWithColor:[SKColor redColor] size:playerSize];
-    //SKSpriteNode *player = [SKSpriteNode spriteNodeWithImageNamed:@"pickup.png"];
+    //SKSpriteNode *player = [SKSpriteNode spriteNodeWithColor:[SKColor redColor] size:playerSize];
+    SKSpriteNode *player = [SKSpriteNode spriteNodeWithImageNamed:@"ambulance.png"];
     
     player.anchorPoint = CGPointMake(0.5, 0.5);
     
@@ -220,8 +222,11 @@ static const uint32_t bordersCategory =  0x1 << 3;
 
     //высота волна на экране в обычнеое время - screenCell.width
     
-    CGSize waveSize = CGSizeMake(screenWidth, screenHeight + 100);
+    CGSize waveSize = CGSizeMake(screenWidth, screenHeight);
     SKSpriteNode *wave = [SKSpriteNode spriteNodeWithColor:[SKColor blueColor] size:waveSize];
+    
+    SKTexture *waveTexture = [SKTexture textureWithImageNamed:@"volna1.png"];
+    wave.texture = waveTexture;
     
     wave.anchorPoint = CGPointMake(0.5, 1);
     wave.zPosition = 11;
@@ -243,6 +248,18 @@ static const uint32_t bordersCategory =  0x1 << 3;
     _wave = wave;
     [self addChild:_wave];
     NSLog(@"wave node created");
+    
+    //ANIMATION//
+    
+    // Running player animation
+    SKTexture * runTexture1 = [SKTexture textureWithImageNamed:@"volna1.png"];
+    SKTexture * runTexture2 = [SKTexture textureWithImageNamed:@"volna2.png"];
+    SKTexture * runTexture3 = [SKTexture textureWithImageNamed:@"volna3.png"];
+    
+    NSArray * runTexture = @[runTexture1, runTexture2, runTexture3];
+    
+    SKAction *waveAnimationAction = [SKAction animateWithTextures:runTexture timePerFrame:0.1 resize:YES restore:NO];
+    [_wave runAction:[SKAction repeatActionForever:waveAnimationAction]];
 }
 
 - (void)addBackgrounds {
@@ -579,7 +596,8 @@ static const uint32_t bordersCategory =  0x1 << 3;
 
     SKAction *waveMoveUpAction = [SKAction moveToY:screenHeight duration:1];
     [_wave runAction:waveMoveUpAction completion:^{
-        [self gameOver];
+        
+        [self addGameOverLabel];
     }];
 }
 
@@ -603,6 +621,20 @@ static const uint32_t bordersCategory =  0x1 << 3;
     _speedometerLabel.hidden = YES;
     _kilometersRemainLabel.hidden = YES;
 
+}
+
+- (void)addGameOverLabel {
+
+    NSString *gameOverString = @"GAME OVER";
+    
+    SKLabelNode *gameOverLabel = [SKLabelNode labelNodeWithFontNamed:@"San Francisco"];
+    gameOverLabel.text = gameOverString;
+    gameOverLabel.fontColor = [SKColor whiteColor];
+    gameOverLabel.fontSize = 30;
+    gameOverLabel.zPosition = 100;
+    gameOverLabel.position = CGPointMake(screenWidth / 2, screenHeight / 2);
+    _gameOverLabel = gameOverLabel;
+    [self addChild:_gameOverLabel];
 }
 
 #pragma mark - GAME MECHANIC

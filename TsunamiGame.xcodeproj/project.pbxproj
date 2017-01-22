@@ -17,9 +17,11 @@
 		091913AE1E334ACC005EA095 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 091913AD1E334ACC005EA095 /* Assets.xcassets */; };
 		091913B11E334ACC005EA095 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 091913AF1E334ACC005EA095 /* LaunchScreen.storyboard */; };
 		091913BA1E33664D005EA095 /* Background.m in Sources */ = {isa = PBXBuildFile; fileRef = 091913B91E33664D005EA095 /* Background.m */; };
-		091913BD1E3374F8005EA095 /* road.png in Resources */ = {isa = PBXBuildFile; fileRef = 091913BC1E3374F8005EA095 /* road.png */; };
-		091913BF1E33CB61005EA095 /* pickup.png in Resources */ = {isa = PBXBuildFile; fileRef = 091913BE1E33CB61005EA095 /* pickup.png */; };
 		09F917781E34C6F400F29DC6 /* road1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 09F917771E34C6F400F29DC6 /* road1.jpg */; };
+		09F917841E34D29D00F29DC6 /* volna1.png in Resources */ = {isa = PBXBuildFile; fileRef = 09F917811E34D29D00F29DC6 /* volna1.png */; };
+		09F917851E34D29D00F29DC6 /* volna2.png in Resources */ = {isa = PBXBuildFile; fileRef = 09F917821E34D29D00F29DC6 /* volna2.png */; };
+		09F917861E34D29D00F29DC6 /* volna3.png in Resources */ = {isa = PBXBuildFile; fileRef = 09F917831E34D29D00F29DC6 /* volna3.png */; };
+		09F917881E34D4DE00F29DC6 /* ambulance.png in Resources */ = {isa = PBXBuildFile; fileRef = 09F917871E34D4DE00F29DC6 /* ambulance.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,9 +41,11 @@
 		091913B21E334ACC005EA095 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		091913B81E33664D005EA095 /* Background.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Background.h; sourceTree = "<group>"; };
 		091913B91E33664D005EA095 /* Background.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Background.m; sourceTree = "<group>"; };
-		091913BC1E3374F8005EA095 /* road.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = road.png; sourceTree = "<group>"; };
-		091913BE1E33CB61005EA095 /* pickup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pickup.png; sourceTree = "<group>"; };
 		09F917771E34C6F400F29DC6 /* road1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = road1.jpg; sourceTree = "<group>"; };
+		09F917811E34D29D00F29DC6 /* volna1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = volna1.png; sourceTree = "<group>"; };
+		09F917821E34D29D00F29DC6 /* volna2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = volna2.png; sourceTree = "<group>"; };
+		09F917831E34D29D00F29DC6 /* volna3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = volna3.png; sourceTree = "<group>"; };
+		09F917871E34D4DE00F29DC6 /* ambulance.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ambulance.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,8 +109,10 @@
 		091913BB1E3374BE005EA095 /* Art */ = {
 			isa = PBXGroup;
 			children = (
-				091913BE1E33CB61005EA095 /* pickup.png */,
-				091913BC1E3374F8005EA095 /* road.png */,
+				09F917871E34D4DE00F29DC6 /* ambulance.png */,
+				09F917811E34D29D00F29DC6 /* volna1.png */,
+				09F917821E34D29D00F29DC6 /* volna2.png */,
+				09F917831E34D29D00F29DC6 /* volna3.png */,
 				09F917771E34C6F400F29DC6 /* road1.jpg */,
 			);
 			name = Art;
@@ -173,11 +179,13 @@
 			files = (
 				091913AC1E334ACC005EA095 /* Main.storyboard in Resources */,
 				091913A11E334ACC005EA095 /* GameScene.sks in Resources */,
+				09F917881E34D4DE00F29DC6 /* ambulance.png in Resources */,
 				091913AE1E334ACC005EA095 /* Assets.xcassets in Resources */,
 				091913B11E334ACC005EA095 /* LaunchScreen.storyboard in Resources */,
+				09F917861E34D29D00F29DC6 /* volna3.png in Resources */,
 				091913A31E334ACC005EA095 /* Actions.sks in Resources */,
-				091913BF1E33CB61005EA095 /* pickup.png in Resources */,
-				091913BD1E3374F8005EA095 /* road.png in Resources */,
+				09F917841E34D29D00F29DC6 /* volna1.png in Resources */,
+				09F917851E34D29D00F29DC6 /* volna2.png in Resources */,
 				09F917781E34C6F400F29DC6 /* road1.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -12,7 +12,7 @@
 
 +(Background *)generateNewBackground {
 
-    Background *background = [[Background alloc]initWithImageNamed:@"road.png"];
+    Background *background = [[Background alloc]initWithImageNamed:@"road1.jpg"];
     background.anchorPoint = CGPointZero;
     background.zPosition = 1;
     
